@@ -29,9 +29,11 @@ None of that was a mistake at the time. When the app was one person reading thei
 
 We had changed the database. We hadn't changed the page. It was still fetching every resume and doing the work itself. The browser doesn't know which database it is talking to.
 
-Two tasks of about 28 seconds are the part I got wrong for a while. I assumed the pairwise clustering loop, because it is the only obviously quadratic thing on the page, but I was wrong. Replayed locally, that loop costs tens of milliseconds. The biggest local block lands the moment the payload does, and it is nearly the same at three years as at ten. Parsing the JSON takes under a tenth of a second and the aggregation build isn't much more, so it is neither of those. I never got a 28 second task to show up on my machine. Past that I stopped looking, because guessing is how the clustering theory got started. The fix was to stop shipping 18 MB into the browser.
+Two tasks of about 28 seconds are the part I got wrong for a while. I went for the charts first, because a page with doughnuts looks like a rendering problem. They have ten slices each and the data behind them is memoized, so there was nothing there.
 
-I had gone for the charts before that, for the same reason: a page with doughnuts on it looks like a rendering problem. They have ten slices each and the data build is memoized. Twice I went looking at the visible part of the page instead of the large one.
+Then I assumed the pairwise clustering loop, because it is the only obviously quadratic thing on the page. Replayed locally, that loop costs tens of milliseconds. The biggest local block lands the moment the payload does, and it is nearly the same at three years as at ten. Parsing the JSON takes under a tenth of a second and the aggregation build isn't much more, so it is neither of those. I never got a 28 second task to show up on my machine. Past that I stopped looking, because guessing is how the clustering theory got started.
+
+Charts, then clustering. Both times I went for what looked slow instead of the payload. The fix was to stop shipping 18 MB into the browser.
 
 The migration did not make the page fast. It made the page fixable.
 
